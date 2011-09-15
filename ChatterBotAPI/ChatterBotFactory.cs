@@ -28,9 +28,9 @@ namespace ChatterBotAPI {
 		public ChatterBot Create(ChatterBotType type, object arg) {
 			switch (type) {
 			case ChatterBotType.CLEVERBOT:
-				return new Cleverbot("http://www.cleverbot.com/webservicefrm");
+				return new Cleverbot("http://cleverbot.com/webservicemin");
 			case ChatterBotType.JABBERWACKY:
-				return new Cleverbot("http://www.jabberwacky.com/webservicefrm");
+				return new Cleverbot("http://jabberwacky.com/webservicemin");
 			case ChatterBotType.PANDORABOTS:
 				if (arg == null) throw new ApplicationException("PANDORABOTS needs a botid arg");
 				return new Pandorabots(arg.ToString());

@@ -1,7 +1,6 @@
 using System;
 
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 
 /*
     ChatterBotAPI
@@ -35,9 +34,6 @@ namespace ChatterBotAPI {
 	}
 	
 	class CleverbotSession: ChatterBotSession {
-		private static readonly Regex INPUT_HIDDEN_PATTERN = new Regex("<INPUT NAME=(.+?) TYPE=hidden VALUE=\"(.*?)\">", RegexOptions.IgnoreCase | RegexOptions.Multiline);
-		private static readonly Regex EMOTION_AND_RESPONSE_PATTERN = new Regex("<!-- Begin Response !-->\\s*(?:\\{.+?,(.+?),.+?\\})*\\s*(.*?)\\s*<!-- End Response !-->", RegexOptions.IgnoreCase | RegexOptions.Multiline);
-		
 		private readonly string url;
 		private readonly IDictionary<string, string> vars;
 		
@@ -62,26 +58,36 @@ namespace ChatterBotAPI {
 			
 			string response = Utils.Post(url, vars);
 			
-			MatchCollection inputHiddenMatches = INPUT_HIDDEN_PATTERN.Matches(response);
-			foreach (Match inputHiddenMatch in inputHiddenMatches) {
-				GroupCollection inputHiddenGroups = inputHiddenMatch.Groups;
-				string varName = inputHiddenGroups[1].Value.Trim();
-				string varValue = inputHiddenGroups[2].Value.Trim();
-				vars[varName] = varValue;
-			}
+			string[] responseValues = response.Split('\r');
+			
+			//vars[""] = Utils.StringAtIndex(responseValues, 0); ??
+			vars["sessionid"] = Utils.StringAtIndex(responseValues, 1);
+			vars["logurl"] = Utils.StringAtIndex(responseValues, 2);
+			vars["vText8"] = Utils.StringAtIndex(responseValues, 3);
+			vars["vText7"] = Utils.StringAtIndex(responseValues, 4);
+			vars["vText6"] = Utils.StringAtIndex(responseValues, 5);
+			vars["vText5"] = Utils.StringAtIndex(responseValues, 6);
+			vars["vText4"] = Utils.StringAtIndex(responseValues, 7);
+			vars["vText3"] = Utils.StringAtIndex(responseValues, 8);
+			vars["vText2"] = Utils.StringAtIndex(responseValues, 9);
+			vars["prevref"] = Utils.StringAtIndex(responseValues, 10);
+			//vars[""] = Utils.StringAtIndex(responseValues, 11); ??
+			vars["emotionalhistory"] = Utils.StringAtIndex(responseValues, 12);
+			vars["ttsLocMP3"] = Utils.StringAtIndex(responseValues, 13);
+			vars["ttsLocTXT"] = Utils.StringAtIndex(responseValues, 14);
+			vars["ttsLocTXT3"] = Utils.StringAtIndex(responseValues, 15);
+			vars["ttsText"] = Utils.StringAtIndex(responseValues, 16);
+			vars["lineRef"] = Utils.StringAtIndex(responseValues, 17);
+			vars["lineURL"] = Utils.StringAtIndex(responseValues, 18);
+			vars["linePOST"] = Utils.StringAtIndex(responseValues, 19);
+			vars["lineChoices"] = Utils.StringAtIndex(responseValues, 20);
+			vars["lineChoicesAbbrev"] = Utils.StringAtIndex(responseValues, 21);
+			vars["typingData"] = Utils.StringAtIndex(responseValues, 22);
+			vars["divert"] = Utils.StringAtIndex(responseValues, 23);
 			
 			ChatterBotThought responseThought = new ChatterBotThought();
 			
-			Match emotionAndResponseMatch = EMOTION_AND_RESPONSE_PATTERN.Match(response);
-			if (emotionAndResponseMatch.Success) {
-				CaptureCollection emotionCaptures = emotionAndResponseMatch.Groups[1].Captures;
-				responseThought.Emotions = new string[emotionCaptures.Count];
-				for (int i = 0; i < emotionCaptures.Count; i++) {
-					Capture emotionCapture = emotionCaptures[i];
-					responseThought.Emotions[i] = emotionCapture.Value;
-				}
-				responseThought.Text = emotionAndResponseMatch.Groups[2].Value;
-			}
+			responseThought.Text = Utils.StringAtIndex(responseValues, 16);
 			
 			return responseThought;
 		}

@@ -70,5 +70,10 @@ namespace ChatterBotAPI {
 			XPathNavigator navigator = document.CreateNavigator();
 			return navigator.SelectSingleNode(expression).Value;
 		}
+		
+		public static string StringAtIndex(string[] strings, int index) {
+			if (index >= strings.Length) return "";
+			return strings[index];
+		}
 	}
 }
