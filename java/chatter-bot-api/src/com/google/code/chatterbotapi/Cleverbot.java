@@ -2,8 +2,6 @@ package com.google.code.chatterbotapi;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /*
     chatter-bot-api
@@ -23,9 +21,6 @@ import java.util.regex.Pattern;
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 class Cleverbot implements ChatterBot {
-    private static final Pattern INPUT_HIDDEN_PATTERN = Pattern.compile("<INPUT NAME=(.+?) TYPE=hidden VALUE=\"(.*?)\">", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
-    private static final Pattern EMOTION_AND_RESPONSE_PATTERN = Pattern.compile("<!-- Begin Response !-->\\s*(?:\\{.+?,(.+?),.+?\\})*\\s*(.*)\\s*<!-- End Response !-->", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
-
     private final String url;
 
     public Cleverbot(String url) {
@@ -61,20 +56,36 @@ class Cleverbot implements ChatterBot {
 
             String response = Utils.post(url, vars);
             
-            Matcher inputHiddenMatcher = INPUT_HIDDEN_PATTERN.matcher(response);
-            while (inputHiddenMatcher.find()) {
-                String varName = inputHiddenMatcher.group(1);
-                String varValue = inputHiddenMatcher.group(2);
-                vars.put(varName.trim(), varValue.trim());
-            }
-
+            String[] responseValues = response.split("\r");
+            
+            //vars.put("", Utils.stringAtIndex(responseValues, 0)); ??
+            vars.put("sessionid", Utils.stringAtIndex(responseValues, 1));
+            vars.put("logurl", Utils.stringAtIndex(responseValues, 2));
+            vars.put("vText8", Utils.stringAtIndex(responseValues, 3));
+            vars.put("vText7", Utils.stringAtIndex(responseValues, 4));
+            vars.put("vText6", Utils.stringAtIndex(responseValues, 5));
+            vars.put("vText5", Utils.stringAtIndex(responseValues, 6));
+            vars.put("vText4", Utils.stringAtIndex(responseValues, 7));
+            vars.put("vText3", Utils.stringAtIndex(responseValues, 8));
+            vars.put("vText2", Utils.stringAtIndex(responseValues, 9));
+            vars.put("prevref", Utils.stringAtIndex(responseValues, 10));
+            //vars.put("", Utils.stringAtIndex(responseValues, 11)); ??
+            vars.put("emotionalhistory", Utils.stringAtIndex(responseValues, 12));
+            vars.put("ttsLocMP3", Utils.stringAtIndex(responseValues, 13));
+            vars.put("ttsLocTXT", Utils.stringAtIndex(responseValues, 14));
+            vars.put("ttsLocTXT3", Utils.stringAtIndex(responseValues, 15));
+            vars.put("ttsText", Utils.stringAtIndex(responseValues, 16));
+            vars.put("lineRef", Utils.stringAtIndex(responseValues, 17));
+            vars.put("lineURL", Utils.stringAtIndex(responseValues, 18));
+            vars.put("linePOST", Utils.stringAtIndex(responseValues, 19));
+            vars.put("lineChoices", Utils.stringAtIndex(responseValues, 20));
+            vars.put("lineChoicesAbbrev", Utils.stringAtIndex(responseValues, 21));
+            vars.put("typingData", Utils.stringAtIndex(responseValues, 22));
+            vars.put("divert", Utils.stringAtIndex(responseValues, 23));
+            
             ChatterBotThought responseThought = new ChatterBotThought();
 
-            Matcher emotionAndResponseMatcher = EMOTION_AND_RESPONSE_PATTERN.matcher(response);
-            if (emotionAndResponseMatcher.find()) {
-                //TODO: parse emotions
-                responseThought.setText(emotionAndResponseMatcher.group(emotionAndResponseMatcher.groupCount()).trim());
-            }
+            responseThought.setText(Utils.stringAtIndex(responseValues, 16));
             
             return responseThought;
         }

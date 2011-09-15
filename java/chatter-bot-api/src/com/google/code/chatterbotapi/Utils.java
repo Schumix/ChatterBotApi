@@ -86,4 +86,9 @@ class Utils {
         Document document = documentBuilder.parse(new ByteArrayInputStream(input.getBytes("UTF-8")));
         return (String) xPathExpression.evaluate(document, XPathConstants.STRING);
     }
+    
+    public static String stringAtIndex(String[] strings, int index) {
+        if (index >= strings.length) return "";
+        return strings[index];
+    }
 }
