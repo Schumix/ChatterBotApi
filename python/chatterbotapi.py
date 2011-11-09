@@ -97,32 +97,32 @@ class _CleverbotSession(ChatterBotSession):
         url_response = urllib2.urlopen(self.bot.url, data)
         response = url_response.read()
         response_values = response.split('\r')
-        #self.vars['??'] = response_values[0] if len(response_values) > 0 else ''
-        self.vars['sessionid'] = response_values[1] if len(response_values) > 1 else ''
-        self.vars['logurl'] = response_values[2] if len(response_values) > 2 else ''
-        self.vars['vText8'] = response_values[3] if len(response_values) > 3 else ''
-        self.vars['vText7'] = response_values[4] if len(response_values) > 4 else ''
-        self.vars['vText6'] = response_values[5] if len(response_values) > 5 else ''
-        self.vars['vText5'] = response_values[6] if len(response_values) > 6 else ''
-        self.vars['vText4'] = response_values[7] if len(response_values) > 7 else ''
-        self.vars['vText3'] = response_values[8] if len(response_values) > 8 else ''
-        self.vars['vText2'] = response_values[9] if len(response_values) > 9 else ''
-        self.vars['prevref'] = response_values[10] if len(response_values) > 10 else ''
-        #self.vars['??'] = response_values[11] if len(response_values) > 11 else ''
-        self.vars['emotionalhistory'] = response_values[12] if len(response_values) > 12 else ''
-        self.vars['ttsLocMP3'] = response_values[13] if len(response_values) > 13 else ''
-        self.vars['ttsLocTXT'] = response_values[14] if len(response_values) > 14 else ''
-        self.vars['ttsLocTXT3'] = response_values[15] if len(response_values) > 15 else ''
-        self.vars['ttsText'] = response_values[16] if len(response_values) > 16 else ''
-        self.vars['lineRef'] = response_values[17] if len(response_values) > 17 else ''
-        self.vars['lineURL'] = response_values[18] if len(response_values) > 18 else ''
-        self.vars['linePOST'] = response_values[19] if len(response_values) > 19 else ''
-        self.vars['lineChoices'] = response_values[20] if len(response_values) > 20 else ''
-        self.vars['lineChoicesAbbrev'] = response_values[21] if len(response_values) > 21 else ''
-        self.vars['typingData'] = response_values[22] if len(response_values) > 22 else ''
-        self.vars['divert'] = response_values[23] if len(response_values) > 23 else ''
+        #self.vars['??'] = _utils_string_at_index(response_values, 0)
+        self.vars['sessionid'] = _utils_string_at_index(response_values, 1)
+        self.vars['logurl'] = _utils_string_at_index(response_values, 2)
+        self.vars['vText8'] = _utils_string_at_index(response_values, 3)
+        self.vars['vText7'] = _utils_string_at_index(response_values, 4)
+        self.vars['vText6'] = _utils_string_at_index(response_values, 5)
+        self.vars['vText5'] = _utils_string_at_index(response_values, 6)
+        self.vars['vText4'] = _utils_string_at_index(response_values, 7)
+        self.vars['vText3'] = _utils_string_at_index(response_values, 8)
+        self.vars['vText2'] = _utils_string_at_index(response_values, 9)
+        self.vars['prevref'] = _utils_string_at_index(response_values, 10)
+        #self.vars['??'] = _utils_string_at_index(response_values, 11)
+        self.vars['emotionalhistory'] = _utils_string_at_index(response_values, 12)
+        self.vars['ttsLocMP3'] = _utils_string_at_index(response_values, 13)
+        self.vars['ttsLocTXT'] = _utils_string_at_index(response_values, 14)
+        self.vars['ttsLocTXT3'] = _utils_string_at_index(response_values, 15)
+        self.vars['ttsText'] = _utils_string_at_index(response_values, 16)
+        self.vars['lineRef'] = _utils_string_at_index(response_values, 17)
+        self.vars['lineURL'] = _utils_string_at_index(response_values, 18)
+        self.vars['linePOST'] = _utils_string_at_index(response_values, 19)
+        self.vars['lineChoices'] = _utils_string_at_index(response_values, 20)
+        self.vars['lineChoicesAbbrev'] = _utils_string_at_index(response_values, 21)
+        self.vars['typingData'] = _utils_string_at_index(response_values, 22)
+        self.vars['divert'] = _utils_string_at_index(response_values, 23)
         response_thought = ChatterBotThought()
-        response_thought.text = response_values[16] if len(response_values) > 16 else ''
+        response_thought.text = _utils_string_at_index(response_values, 16)
         return response_thought
 
 #################################################
@@ -153,3 +153,13 @@ class _PandorabotsSession(ChatterBotSession):
         response_thought = ChatterBotThought()
         response_thought.text = response_dom.getElementsByTagName('that')[0].childNodes[0].data
         return response_thought
+
+#################################################
+# Utils
+#################################################
+
+def _utils_string_at_index(strings, index):
+    if len(strings) > index:
+        return strings[index]
+    else:
+        return ''
