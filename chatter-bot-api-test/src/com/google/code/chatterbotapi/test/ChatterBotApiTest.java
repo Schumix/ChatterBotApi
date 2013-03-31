@@ -27,7 +27,7 @@ public class ChatterBotApiTest {
         ChatterBot bot1 = factory.create(ChatterBotType.CLEVERBOT);
         ChatterBotSession bot1session = bot1.createSession();
 
-        ChatterBot bot2 = factory.create(ChatterBotType.PANDORABOTS, "d689f7b8de347251");
+        ChatterBot bot2 = factory.create(ChatterBotType.PANDORABOTS, "b0dafd24ee35a477");
         ChatterBotSession bot2session = bot2.createSession();
 
         String s = "Hi";
