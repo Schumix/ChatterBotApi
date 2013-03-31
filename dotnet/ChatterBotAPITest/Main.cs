@@ -29,7 +29,7 @@ namespace ChatterBotAPITest {
 			ChatterBot bot1 = factory.Create(ChatterBotType.CLEVERBOT);
 			ChatterBotSession bot1session = bot1.CreateSession();
 			
-			ChatterBot bot2 = factory.Create(ChatterBotType.PANDORABOTS, "d689f7b8de347251");
+			ChatterBot bot2 = factory.Create(ChatterBotType.PANDORABOTS, "b0dafd24ee35a477");
 			ChatterBotSession bot2session = bot2.CreateSession();
 			
 			string s = "Hi";

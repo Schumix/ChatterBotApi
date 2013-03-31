@@ -36,7 +36,7 @@
             {
                 case ChatterBotType::CLEVERBOT:
                 {
-                    return new _Cleverbot('http://cleverbot.com/webservicemin');
+                    return new _Cleverbot('http://www.cleverbot.com/webservicemin');
                 }
                 case ChatterBotType::JABBERWACKY:
                 {

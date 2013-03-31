@@ -36,7 +36,7 @@ class ChatterBotFactory:
 
     def create(self, type, arg = None):
         if type == ChatterBotType.CLEVERBOT:
-            return _Cleverbot('http://cleverbot.com/webservicemin')
+            return _Cleverbot('http://www.cleverbot.com/webservicemin')
         elif type == ChatterBotType.JABBERWACKY:
             return _Cleverbot('http://jabberwacky.com/webservicemin')
         elif type == ChatterBotType.PANDORABOTS:
