@@ -28,7 +28,7 @@ namespace ChatterBotAPI {
 		public ChatterBot Create(ChatterBotType type, object arg) {
 			switch (type) {
 			case ChatterBotType.CLEVERBOT:
-				return new Cleverbot("http://cleverbot.com/webservicemin");
+				return new Cleverbot("http://www.cleverbot.com/webservicemin");
 			case ChatterBotType.JABBERWACKY:
 				return new Cleverbot("http://jabberwacky.com/webservicemin");
 			case ChatterBotType.PANDORABOTS:
