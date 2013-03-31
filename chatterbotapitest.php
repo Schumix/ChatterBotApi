@@ -24,7 +24,7 @@
     $bot1 = $factory->create(ChatterBotType::CLEVERBOT);
     $bot1session = $bot1->createSession();
     
-    $bot2 = $factory->create(ChatterBotType::PANDORABOTS, 'd689f7b8de347251');
+    $bot2 = $factory->create(ChatterBotType::PANDORABOTS, 'b0dafd24ee35a477');
     $bot2session = $bot2->createSession();
     
     $s = 'Hi';
