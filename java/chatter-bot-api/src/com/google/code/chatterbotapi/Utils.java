@@ -62,6 +62,7 @@ class Utils {
     
     public static String post(String url, Map<String, String> parameters) throws Exception {
         URLConnection connection = new URL(url).openConnection();
+        connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:5.0) Gecko/20100101 Firefox/5.0");
         connection.setDoOutput(true);
         connection.setDoInput(true);
         OutputStreamWriter osw = new OutputStreamWriter(connection.getOutputStream());
