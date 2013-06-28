@@ -35,7 +35,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyInfo.cs" />
     <Compile Include="ChatterBotFactory.cs" />
     <Compile Include="ChatterBotType.cs" />
     <Compile Include="ChatterBot.cs" />
@@ -44,6 +43,10 @@
     <Compile Include="ChatterBotThought.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="Pandorabots.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
 </Project>

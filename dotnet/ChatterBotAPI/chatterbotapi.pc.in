@@ -1,0 +1,6 @@
+Name: ChatterBotAPI
+Description: ChatterBotAPI
+Version: 0.1
+
+Requires: 
+Libs: -r:@expanded_libdir@/@PACKAGE@/ChatterBotAPI.dll
