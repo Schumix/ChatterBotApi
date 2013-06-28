@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatterBotAPI", "ChatterBotAPI\ChatterBotAPI.csproj", "{2E624962-F155-432C-A90A-E1CE75DEE9EA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatterBotAPITest", "ChatterBotAPITest\ChatterBotAPITest.csproj", "{DA59F247-C17B-4A92-BB03-CB458C6916F0}"

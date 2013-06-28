@@ -4,7 +4,7 @@ EXTRA_DIST =
 # Warning: This is an automatically generated file, do not edit!
 
 if ENABLE_DEBUG
-ASSEMBLY_COMPILER_COMMAND = gmcs
+ASSEMBLY_COMPILER_COMMAND = dmcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize- -debug "-define:DEBUG"
 ASSEMBLY = bin/Debug/ChatterBotAPI.dll
 ASSEMBLY_MDB = $(ASSEMBLY).mdb
@@ -18,7 +18,7 @@ CHATTERBOTAPI_DLL_MDB=$(BUILD_DIR)/ChatterBotAPI.dll.mdb
 endif
 
 if ENABLE_RELEASE
-ASSEMBLY_COMPILER_COMMAND = gmcs
+ASSEMBLY_COMPILER_COMMAND = dmcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize-
 ASSEMBLY = bin/Release/ChatterBotAPI.dll
 ASSEMBLY_MDB = 
@@ -30,7 +30,7 @@ CHATTERBOTAPI_DLL_MDB=
 
 endif
 
-AL=al2
+AL=al
 SATELLITE_ASSEMBLY_NAME=$(notdir $(basename $(ASSEMBLY))).resources.dll
 
 PROGRAMFILES = \
@@ -60,6 +60,7 @@ DATA_FILES =
 RESOURCES = 
 
 EXTRAS = \
+	Properties \
 	chatterbotapi.pc.in 
 
 REFERENCES =  \
