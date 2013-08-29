@@ -36,11 +36,11 @@
             {
                 case ChatterBotType::CLEVERBOT:
                 {
-                    return new _Cleverbot('http://www.cleverbot.com/webservicemin');
+                    return new _Cleverbot('http://www.cleverbot.com/webservicemin', 26);
                 }
                 case ChatterBotType::JABBERWACKY:
                 {
-                    return new _Cleverbot('http://jabberwacky.com/webservicemin');
+                    return new _Cleverbot('http://jabberwacky.com/webservicemin', 20);
                 }
                 case ChatterBotType::PANDORABOTS:
                 {
@@ -98,10 +98,12 @@
     class _Cleverbot extends ChatterBot
     {
         private $url;
+        private $endIndex;
         
-        public function __construct($url)
+        public function __construct($url, $endIndex)
         {
             $this->url = $url;
+            $this->endIndex = $endIndex;
         }
         
         public function getUrl()
@@ -112,6 +114,16 @@
         public function setUrl($url)
         {
             $this->url = $url;
+        }        
+
+        public function getEndIndex()
+        {
+            return $this->endIndex;
+        }
+        
+        public function setEndIndex($endIndex)
+        {
+            $this->endIndex = $endIndex;
         }        
 
         public function createSession()
@@ -141,7 +153,7 @@
         {
             $this->vars['stimulus'] = $thought->getText();
             $data = http_build_query($this->vars);
-            $dataToDigest = substr($data, 9, 20);
+            $dataToDigest = substr($data, 9, $this->bot->getEndIndex());
             $dataDigest = md5($dataToDigest);
             $this->vars['icognocheck'] = $dataDigest;
             $response = _utils_post($this->bot->getUrl(), $this->vars);
@@ -223,7 +235,7 @@
             $element = new SimpleXMLElement($response);
             $result = $element->xpath('//result/that/text()');
             $responseThought = new ChatterBotThought();
-            $responseThought->setText($result[0][0]);
+            $responseThought->setText(trim($result[0][0]));
             return $responseThought;
         }
     }
