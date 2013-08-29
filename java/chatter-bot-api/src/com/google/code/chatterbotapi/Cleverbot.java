@@ -22,9 +22,11 @@ import java.util.Map;
 */
 class Cleverbot implements ChatterBot {
     private final String url;
+    private int endIndex;
 
-    public Cleverbot(String url) {
+    public Cleverbot(String url, int endIndex) {
         this.url = url;
+        this.endIndex = endIndex;
     }
 
     @Override
@@ -50,7 +52,7 @@ class Cleverbot implements ChatterBot {
             vars.put("stimulus", thought.getText());
 
             String formData = Utils.parametersToWWWFormURLEncoded(vars);
-            String formDataToDigest = formData.substring(9, 29);
+            String formDataToDigest = formData.substring(9, endIndex);
             String formDataDigest = Utils.md5(formDataToDigest);
             vars.put("icognocheck", formDataDigest);
 
