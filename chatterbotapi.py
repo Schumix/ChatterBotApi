@@ -36,9 +36,9 @@ class ChatterBotFactory:
 
     def create(self, type, arg = None):
         if type == ChatterBotType.CLEVERBOT:
-            return _Cleverbot('http://www.cleverbot.com/webservicemin')
+            return _Cleverbot('http://www.cleverbot.com/webservicemin', 35)
         elif type == ChatterBotType.JABBERWACKY:
-            return _Cleverbot('http://jabberwacky.com/webservicemin')
+            return _Cleverbot('http://jabberwacky.com/webservicemin', 29)
         elif type == ChatterBotType.PANDORABOTS:
             if arg == None:
                 raise Exception('PANDORABOTS needs a botid arg')
@@ -70,8 +70,9 @@ class ChatterBotThought:
 
 class _Cleverbot(ChatterBot):
 
-    def __init__(self, url):
+    def __init__(self, url, endIndex):
         self.url = url
+        self.endIndex = endIndex
 
     def create_session(self):
         return _CleverbotSession(self)
@@ -91,7 +92,7 @@ class _CleverbotSession(ChatterBotSession):
     def think_thought(self, thought):
         self.vars['stimulus'] = thought.text
         data = urllib.urlencode(self.vars)
-        data_to_digest = data[9:29]
+        data_to_digest = data[9:self.bot.endIndex]
         data_digest = md5.new(data_to_digest).hexdigest()
         data = data + '&icognocheck=' + data_digest
         url_response = urllib2.urlopen(self.bot.url, data)
@@ -151,7 +152,7 @@ class _PandorabotsSession(ChatterBotSession):
         response = url_response.read()
         response_dom = xml.dom.minidom.parseString(response)
         response_thought = ChatterBotThought()
-        response_thought.text = response_dom.getElementsByTagName('that')[0].childNodes[0].data
+        response_thought.text = response_dom.getElementsByTagName('that')[0].childNodes[0].data.strip()
         return response_thought
 
 #################################################
