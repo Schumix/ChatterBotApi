@@ -68,7 +68,7 @@ namespace ChatterBotAPI {
 		public static string XPathSearch(string input, string expression) {
 			XPathDocument document = new XPathDocument(new MemoryStream(Encoding.ASCII.GetBytes(input)));
 			XPathNavigator navigator = document.CreateNavigator();
-			return navigator.SelectSingleNode(expression).Value;
+			return navigator.SelectSingleNode(expression).Value.Trim();
 		}
 		
 		public static string StringAtIndex(string[] strings, int index) {
