@@ -23,22 +23,26 @@ namespace ChatterBotAPI {
 	
 	class Cleverbot: ChatterBot {
 		private readonly string url;
+		private readonly int endIndex;
 		
-		public Cleverbot(string url) {
+		public Cleverbot(string url, int endIndex) {
 			this.url = url;
+			this.endIndex = endIndex;
 		}
 		
 		public ChatterBotSession CreateSession() {
-			return new CleverbotSession(url);
+			return new CleverbotSession(url, endIndex);
 		}
 	}
 	
 	class CleverbotSession: ChatterBotSession {
 		private readonly string url;
+		private readonly int endIndex;
 		private readonly IDictionary<string, string> vars;
 		
-		public CleverbotSession(string url) {
+		public CleverbotSession(string url, int endIndex) {
 			this.url = url;
+			this.endIndex = endIndex;
 			vars = new Dictionary<string, string>();
 			vars["start"] = "y";
 			vars["icognoid"] = "wsf";
@@ -52,7 +56,7 @@ namespace ChatterBotAPI {
 			vars["stimulus"] = thought.Text;
 			
 			string formData = Utils.ParametersToWWWFormURLEncoded(vars);
-			string formDataToDigest = formData.Substring(9, 20);
+			string formDataToDigest = formData.Substring(9, endIndex);
 			string formDataDigest = Utils.MD5(formDataToDigest);
 			vars["icognocheck"] = formDataDigest;
 			
