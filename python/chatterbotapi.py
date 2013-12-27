@@ -1,4 +1,4 @@
-import md5
+import hashlib
 import urllib
 import urllib2
 import uuid
@@ -92,7 +92,7 @@ class _CleverbotSession(ChatterBotSession):
         self.vars['stimulus'] = thought.text
         data = urllib.urlencode(self.vars)
         data_to_digest = data[9:29]
-        data_digest = md5.new(data_to_digest).hexdigest()
+        data_digest = hashlib.md5(data_to_digest).hexdigest()
         data = data + '&icognocheck=' + data_digest
         url_response = urllib2.urlopen(self.bot.url, data)
         response = url_response.read()
