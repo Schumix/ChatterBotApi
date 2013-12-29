@@ -62,6 +62,7 @@ DATA_FILES =
 RESOURCES = 
 
 EXTRAS = \
+	Properties \
 	chatterbotapitest.in 
 
 REFERENCES =  \
