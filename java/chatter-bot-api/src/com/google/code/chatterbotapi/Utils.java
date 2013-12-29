@@ -19,7 +19,6 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 import org.w3c.dom.Document;
-import org.xml.sax.InputSource;
 
 /*
     chatter-bot-api
@@ -62,7 +61,7 @@ class Utils {
     
     public static String post(String url, Map<String, String> parameters) throws Exception {
         URLConnection connection = new URL(url).openConnection();
-        connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:5.0) Gecko/20100101 Firefox/5.0");
+        connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.95 Safari/537.36");
         connection.setDoOutput(true);
         connection.setDoInput(true);
         OutputStreamWriter osw = new OutputStreamWriter(connection.getOutputStream());
@@ -85,7 +84,8 @@ class Utils {
         XPath xPath = XPathFactory.newInstance().newXPath();
         XPathExpression xPathExpression = xPath.compile(expression);
         Document document = documentBuilder.parse(new ByteArrayInputStream(input.getBytes("UTF-8")));
-        return (String) xPathExpression.evaluate(document, XPathConstants.STRING);
+        String output = (String) xPathExpression.evaluate(document, XPathConstants.STRING);
+        return output == null ? "" : output.trim();
     }
     
     public static String stringAtIndex(String[] strings, int index) {
