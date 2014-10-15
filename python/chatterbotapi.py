@@ -152,7 +152,16 @@ class _PandorabotsSession(ChatterBotSession):
         response = url_response.read()
         response_dom = xml.dom.minidom.parseString(response)
         response_thought = ChatterBotThought()
-        response_thought.text = response_dom.getElementsByTagName('that')[0].childNodes[0].data.strip()
+        that_elements = response_dom.getElementsByTagName('that')
+        if that_elements is None or len(that_elements) == 0 or that_elements[0] is None:
+            return ''
+        that_elements_child_nodes = that_elements[0].childNodes
+        if that_elements_child_nodes is None or len(that_elements_child_nodes) == 0 or that_elements_child_nodes[0] is None:
+            return ''
+        that_elements_child_nodes_data = that_elements_child_nodes[0].data
+        if that_elements_child_nodes_data is None:
+            return ''
+        response_thought.text = that_elements_child_nodes_data.strip()
         return response_thought
 
 #################################################
