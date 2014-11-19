@@ -250,6 +250,7 @@
         $contextParams['http'] = array();
         $contextParams['http']['method'] = 'POST';
         $contextParams['http']['content'] = http_build_query($params);
+        $contextParams['http']['header'] = "Content-type: application/x-www-form-urlencoded\r\n";
         $context = stream_context_create($contextParams);
         $fp = fopen($url, 'rb', false, $context);
         $response = stream_get_contents($fp);
